@@ -47,23 +47,21 @@ Create a role named `SecurityHubReadRole` with the following trust policy:
 1. Package the Lambda Function
 Ensure your Python file is named lambda_function.py.
 
-
 2. Create the Lambda Function
+Deploy the function using the AWS Console, AWS CLI, or Infrastructure as Code tools like CloudFormation or Terraform.
 
 ⚙️ Environment Configuration
-Update the following variables in your code or use Lambda environment variables:
+Update the following variables in your code or configure them as Lambda environment variables:
 
-LOG_GROUP = "/securityhub/all-findings"
-REGION = "us-east-1"
-child_accounts = [{'account_id': '123456789012', 'role_name': 'SecurityHubReadRole'}]
+
 📊 CloudWatch Logs
-Log group: /securityhub/all-findings
-Log stream: Named after each child account ID
-Each log event contains a timestamp and the full findings payload (chunked if large)
+Log Group: /securityhub/all-findings
+Log Stream: Named after each child account ID
+Log Events: Each event includes a timestamp and the full findings payload (automatically chunked if too large)
 🚀 Usage
-You can trigger this Lambda manually or schedule it using Amazon EventBridge (e.g., every 6 hours).
+You can trigger this Lambda function manually or schedule it using Amazon EventBridge (e.g., every 6 hours).
 
 📌 Notes
-Ensure findings are not too large for CloudWatch (max 1 MB per log event).
+Ensure findings are not too large for CloudWatch (maximum 1 MB per log event).
 The function automatically chunks large logs to stay within limits.
 Make sure all accounts have Security Hub enabled and findings available.
