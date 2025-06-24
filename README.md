@@ -50,6 +50,51 @@ Create a role named `SecurityHubReadRole` with the following **trust policy** to
 
 Attach a policy granting read-only access to Security Hub (e.g., `SecurityAudit` or custom policy with `securityhub:GetFindings`).
 
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "securityhub:GetFindings",
+                "securityhub:ListFindings"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### In Master Accounts
+
+Create an IAM role for Lambda function deployment:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": "arn:aws:iam::<child account ID>:role/SecurityHubReadRole"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogStreams"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ---
 
 ## 🛠️ Lambda Deployment
@@ -91,7 +136,7 @@ Set the following **Lambda environment variables** (or hard-code in your script)
 You can trigger the Lambda function:
 
 * **Manually**
-* On a **schedule** using Amazon EventBridge (e.g., every 6 hours)
+* **schedule** using Amazon EventBridge (e.g., every 6 hours)
 
 ---
 
