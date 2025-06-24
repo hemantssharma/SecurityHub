@@ -43,7 +43,8 @@ Create a role named `SecurityHubReadRole` with the following trust policy:
 }
 
 
-🛠️ Lambda Deployment
+
+## 🛠️ Lambda Deployment
 1. Package the Lambda Function
 Ensure your Python file is named lambda_function.py.
 
